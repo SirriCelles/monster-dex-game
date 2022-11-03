@@ -1,35 +1,39 @@
 import { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  // constructor runs first
   constructor() {
     super();
 
+    // init state
     this.state = {
-      monsters: [
-        {
-          name: 'Linda',
-          id: '12rfdjldl93u'
-        },
-        {
-          name: 'Frank',
-          id: '12rfdjldlo3u'
-        }, 
-        {
-          name: 'Jacky',
-          id: '12rkdjldl93u'
-        },
-        {
-          name: 'Jed',
-          id: '124fdjldl93u'
-        }
-      ]
-    }
+      monsters: []
+    };
   }
+
+  // The the lifecycle methods commenses
+  componentDidMount() {
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then((res) => res.json())
+    .then((users) => this.setState(() => {
+      return {monsters: users}
+    },
+    () => {
+      console.log(this.state);
+    }
+    ));
+  }
+
+
+  // this runs next and termiines what to show
   render() {
     return (
       <div className="App">
+        <input className='search-box' type='search' placeholder='search monters' 
+          onChange={(event) => {
+            
+          }} />
         {
           this.state.monsters.map((monster) => {
             return <div key={monster.id}>
